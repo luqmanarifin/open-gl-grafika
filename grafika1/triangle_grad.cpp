@@ -15,9 +15,9 @@ const char* fragment_shader =
 "uniform vec2 resolution;"
 "void main () {"
 "	vec2 position = gl_FragCoord.xy;"
-"	float red = (position.y/100);"
-"	float green = 0;"
-"	float blue = 0;"
+"	float red = sin(position.y/20);"
+"	float green = cos(position.y/20);"
+"	float blue = tan(position.y/20);"
 "	gl_FragColor = vec4(red, green, blue, 1.0);"
 "}";
 
