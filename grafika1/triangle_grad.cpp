@@ -11,31 +11,16 @@ const char* vertex_shader =
 
 const char* fragment_shader =
 "#version 150\n"
-"out vec4 frag_colour;"
+"precision mediump float;"
+"uniform vec2 resolution;"
 "void main () {"
-"  frag_colour = vec4 (0.5, 0.5, 0.5, 1.0);"
+"	vec2 position = gl_FragCoord.xy;"
+"	float red = (position.y/100);"
+"	float green = 0;"
+"	float blue = 0;"
+"	gl_FragColor = vec4(red, green, blue, 1.0);"
 "}";
 
-const char* fragment_shader_r =
-"#version 150\n"
-"out vec4 frag_colour;"
-"void main () {"
-"  frag_colour = vec4 (1.0, 0.0, 0.0, 1.0);"
-"}";
-
-const char* fragment_shader_g =
-"#version 150\n"
-"out vec4 frag_colour;"
-"void main () {"
-"  frag_colour = vec4 (0.0, 1.0, 0.0, 1.0);"
-"}";
-
-const char* fragment_shader_b =
-"#version 150\n"
-"out vec4 frag_colour;"
-"void main () {"
-"  frag_colour = vec4 (0.0, 0.0, 1.0, 1.0);"
-"}";
 
 void printMachineSpecification() {
 	const GLubyte* renderer = glGetString (GL_RENDERER); // get renderer string
@@ -105,48 +90,20 @@ int main(int argc, char** argv) {
 
 
 	float points[] = {
-	   0.0f,  0.5f,  0.0f,
-	   0.25f, 0.0f,  0.0f,
-	   -0.25f, 0.0f,  0.0f
+	   0.0f,  1.0f,  0.0f,
+	   1.0f, -1.0f,  0.0f,
+	   -1.0f, -1.0f,  0.0f
 	};
 
 	GLuint vao;
 	createTriangle(&vao, points);
-
-	float points2[] = {
-	   0.25f,  0.0f,  0.0f,
-	   0.5f, -0.5f,  0.0f,
-	  0.0f, -0.5f,  0.0f
-	};
-
-	GLuint vao2;
-	createTriangle(&vao2, points2);
-
-	float points3[] = {
-	   -0.25f,  0.0f,  0.0f,
-	   0.0f, -0.5f,  0.0f,
-	  -0.5f, -0.5f,  0.0f
-	};
-
-	GLuint vao3;
-	createTriangle(&vao3, points3);
-
 	GLuint shader_programme;
 	createShader(&shader_programme, fragment_shader, vertex_shader);
-
-	GLuint shader_programme_r;
-	createShader(&shader_programme_r, fragment_shader_r, vertex_shader);
-	GLuint shader_programme_g;
-	createShader(&shader_programme_g, fragment_shader_g, vertex_shader);
-	GLuint shader_programme_b;
-	createShader(&shader_programme_b, fragment_shader_b, vertex_shader);
 
 	while (!glfwWindowShouldClose (window)) {
 		// wipe the drawing surface clear
 		glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		drawTriangle(vao, shader_programme_r);
-		drawTriangle(vao2, shader_programme_g);
-		drawTriangle(vao3, shader_programme_b);
+		drawTriangle(vao, shader_programme);
 		// update other events like input handling 
 		glfwPollEvents ();
 		// put the stuff we've been drawing onto the display
