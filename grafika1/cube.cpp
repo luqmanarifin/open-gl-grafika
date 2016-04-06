@@ -34,6 +34,11 @@ void draw_square(float ax, float ay, float az, float aw,
                  float cx, float cy, float cz, float cw,
                  float dx, float dy, float dz, float dw,
                  float color_r, float color_g, float color_b, float color_a){
+    
+    //glTranslatef(0.01, 0, 0);
+    glRotated(0.1, 1, 0, 0);
+    glRotated(0.1, 0, 1, 0);
+    glRotated(0.1, 0, 0, 1);
     glBegin(GL_TRIANGLE_STRIP);
     {
         glColor4f(color_r, color_g, color_b, color_a);
@@ -44,9 +49,9 @@ void draw_square(float ax, float ay, float az, float aw,
         glVertex4f(dx, dy, dz, dw);
         glColor4f(color_r, color_g, color_b, color_a);
         glVertex4f(cx, cy, cz, cw);
-        
     }
     glEnd();
+    
 }
 
 void colorful_cube(void){
