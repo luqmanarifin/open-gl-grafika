@@ -42,11 +42,8 @@ void draw_square(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * d, GLfloat * c
     {
         glColor4f(color[0], color[1], color[2], color[3]);
         glVertex4f(a[0], a[1], a[2], a[3]);
-        glColor4f(color[0], color[1], color[2], color[3]);
         glVertex4f(b[0], b[1], b[2], b[3]);
-        glColor4f(color[0], color[1], color[2], color[3]);
         glVertex4f(d[0], d[1], d[2], d[3]);
-        glColor4f(color[0], color[1], color[2], color[3]);
         glVertex4f(c[0], c[1], c[2], c[3]);
     }
     glEnd();
@@ -138,13 +135,15 @@ void serpienski_triangle_recursive_points(GLfloat * a, GLfloat * b, GLfloat * c,
         }
         glEnd();
         
-        GLfloat vertAB[4] = { (GLfloat) (a[0]+b[0])/2, (GLfloat) (a[1]+b[1])/2, a[2], a[3]};
-        GLfloat vertBC[4] = { (GLfloat) (b[0]+c[0])/2, (GLfloat) (b[1]+c[1])/2, b[2], b[3]};
-        GLfloat vertCA[4] = { (GLfloat) (c[0]+a[0])/2, (GLfloat) (c[1]+a[1])/2, c[2], c[3]};
-
-        serpienski_triangle_recursive_points(a, vertAB, vertCA, num_iterative);
-        serpienski_triangle_recursive_points(vertAB, b, vertBC, num_iterative);
-        serpienski_triangle_recursive_points(vertCA, vertBC, c, num_iterative);
+        if(num_iterative > 0){
+            GLfloat vertAB[4] = { (GLfloat) (a[0]+b[0])/2, (GLfloat) (a[1]+b[1])/2, a[2], a[3]};
+            GLfloat vertBC[4] = { (GLfloat) (b[0]+c[0])/2, (GLfloat) (b[1]+c[1])/2, b[2], b[3]};
+            GLfloat vertCA[4] = { (GLfloat) (c[0]+a[0])/2, (GLfloat) (c[1]+a[1])/2, c[2], c[3]};
+            
+            serpienski_triangle_recursive_points(a, vertAB, vertCA, num_iterative);
+            serpienski_triangle_recursive_points(vertAB, b, vertBC, num_iterative);
+            serpienski_triangle_recursive_points(vertCA, vertBC, c, num_iterative);
+        }
         
     }
     
@@ -164,32 +163,38 @@ void serpienski_triangle_points(int num_iterative){
 }
 
 /* tugas 2c */
-void serpienski_triangle_recursive(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * color, int num_iterative){
+void serpienski_triangle_recursive(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * color, int num_iterative, int count){
     
     
-    if(num_iterative > 0){
-        num_iterative--;
+    if(count < num_iterative){
+        count++;
         glBegin(GL_TRIANGLES);
         {
             glColor4f(color[0], color[1], color[2], color[3]);
             glVertex4f(a[0], a[1], a[2], a[3]);
-            glColor4f(color[0], color[1], color[2], color[3]);
             glVertex4f(b[0], b[1], b[2], b[3]);
-            glColor4f(color[0], color[1], color[2], color[3]);
             glVertex4f(c[0], c[1], c[2], c[3]);
             
         }
         glEnd();
         
-        GLfloat vertAB[4] = { (GLfloat) (a[0]+b[0])/2, (GLfloat) (a[1]+b[1])/2, a[2], a[3]};
-        GLfloat vertBC[4] = { (GLfloat) (b[0]+c[0])/2, (GLfloat) (b[1]+c[1])/2, b[2], b[3]};
-        GLfloat vertCA[4] = { (GLfloat) (c[0]+a[0])/2, (GLfloat) (c[1]+a[1])/2, c[2], c[3]};
+        if (count < num_iterative){
         
-        GLfloat shade[4] = { (GLfloat) (color[0] - 0.1), (GLfloat) (color[1] - 0.1), (GLfloat) (color[2] - 0.1), 1.0};
-        
-        serpienski_triangle_recursive(a, vertAB, vertCA, shade, num_iterative);
-        serpienski_triangle_recursive(vertAB, b, vertBC, shade, num_iterative);
-        serpienski_triangle_recursive(vertCA, vertBC, c, shade, num_iterative);
+            GLfloat vertAB[4] = { (GLfloat) (a[0]+b[0])/2, (GLfloat) (a[1]+b[1])/2, a[2], a[3]};
+            GLfloat vertBC[4] = { (GLfloat) (b[0]+c[0])/2, (GLfloat) (b[1]+c[1])/2, b[2], b[3]};
+            GLfloat vertCA[4] = { (GLfloat) (c[0]+a[0])/2, (GLfloat) (c[1]+a[1])/2, c[2], c[3]};
+            
+            GLfloat shade[4] = {
+                (GLfloat) (color[0] - (GLfloat) 1/num_iterative),
+                (GLfloat) (color[1] - (GLfloat) 1/num_iterative),
+                (GLfloat) (color[2] - (GLfloat) 1/num_iterative),
+                1.0};
+            
+            serpienski_triangle_recursive(a, vertAB, vertCA, shade, num_iterative, count);
+            serpienski_triangle_recursive(vertAB, b, vertBC, shade, num_iterative, count);
+            serpienski_triangle_recursive(vertCA, vertBC, c, shade, num_iterative, count);
+            
+        }
         
     }
     
@@ -208,7 +213,7 @@ void serpienski_triangle(int num_iterative){
     /* Triangle color */
     GLfloat shade[4]       = { 1, 1, 1, 1.0};
     
-    serpienski_triangle_recursive(vertA, vertB, vertC, shade, num_iterative);
+    serpienski_triangle_recursive(vertA, vertB, vertC, shade, num_iterative, 0);
 }
 
 
@@ -236,7 +241,7 @@ int main(int argc, const char * argv[]) {
             return -1;
         }
     
-        win = glfwCreateWindow(640, 480, "OpenGL Base Project", NULL, NULL);
+        win = glfwCreateWindow(640, 480, "Tugas Grafika ", NULL, NULL);
         if(!win){
             glfwTerminate();
             exit(EXIT_FAILURE);
@@ -258,11 +263,9 @@ int main(int argc, const char * argv[]) {
             }else if(choice == 4){
                 serpienski_triangle(num_iterative);
             }
-        
             glfwSwapBuffers(win);
             glfwPollEvents();
         }
-    
         glfwTerminate();
         exit(EXIT_SUCCESS);
     
