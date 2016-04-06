@@ -7,11 +7,12 @@
 //
 
 #include <iostream>
+
 //GLEW
 #include <GL/glew.h>
+
 //GLFW
 #include <GLFW/glfw3.h>
-
 
 void hello_triangle(void){
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // clear background
@@ -34,7 +35,6 @@ void draw_square(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * d, GLfloat * c
     glRotated(0.05, 1, 0, 0);
     glRotated(0.05, 0, 1, 0);
     glRotated(0.05, 0, 0, 1);
-    //glTranslatef(0.001, 0, 0);
     glBegin(GL_TRIANGLE_STRIP);
     {
         glColor4f(color[0], color[1], color[2], color[3]);
@@ -49,7 +49,7 @@ void draw_square(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * d, GLfloat * c
     glEnd();
 }
 
-void colorful_cube(void){
+void colorful_cube(char color_scheme){
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // clear background
     glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
@@ -64,31 +64,74 @@ void colorful_cube(void){
     GLfloat vertG[4] = {-0.5,-0.5,-0.5, 1.0};
     GLfloat vertH[4] = { 0.5,-0.5,-0.5, 1.0};
     
-    /*  Cube colors */
-    GLfloat yellow[4]       = { 1.0, 1.0, 0.0, 1.0};
-    GLfloat red[4]          = { 1.0, 0.0, 0.0, 1.0};
-    GLfloat green[4]        = { 0.0, 1.0, 0.0, 1.0};
-    GLfloat blue[4]         = { 0.0, 0.0, 1.0, 1.0};
-    GLfloat turquoise[4]    = { 0.0, 1.0, 1.0, 1.0};
-    GLfloat pink[4]         = { 1.0, 0.0, 1.0, 1.0};
-
-    /* Draw Cubes */
-    draw_square(vertA, vertB, vertC, vertD, yellow);
-    draw_square(vertF, vertE, vertH, vertG, red);
-    draw_square(vertE, vertA, vertD, vertH, green);
-    draw_square(vertB, vertF, vertG, vertC, blue);
-    draw_square(vertE, vertF, vertB, vertA, turquoise);
-    draw_square(vertD, vertC, vertG, vertH, pink);
     
+    if(color_scheme == 'r'){
+        
+        /*  Cube colors */
+        GLfloat shade1[4]       = { (GLfloat) 230/255, (GLfloat) 0/255, (GLfloat) 0/255, 1.0};
+        GLfloat shade2[4]       = { (GLfloat) 229/255, (GLfloat) 38/255, (GLfloat) 23/255, 1.0};
+        GLfloat shade3[4]       = { (GLfloat) 228/255, (GLfloat) 63/255, (GLfloat) 41/255, 1.0};
+        GLfloat shade4[4]       = { (GLfloat) 228/255, (GLfloat) 86/255, (GLfloat) 60/255, 1.0};
+        GLfloat shade5[4]       = { (GLfloat) 227/255, (GLfloat) 111/255, (GLfloat) 83/255, 1.0};
+        GLfloat shade6[4]       = { (GLfloat) 227/255, (GLfloat) 135/255, (GLfloat) 108/255, 1.0};
+        
+        /* Draw Cubes */
+        draw_square(vertA, vertB, vertC, vertD, shade1);
+        draw_square(vertF, vertE, vertH, vertG, shade6);
+        draw_square(vertE, vertA, vertD, vertH, shade2);
+        draw_square(vertB, vertF, vertG, vertC, shade5);
+        draw_square(vertE, vertF, vertB, vertA, shade3);
+        draw_square(vertD, vertC, vertG, vertH, shade4);
+        
+    } else if(color_scheme == 'g'){
+        
+        GLfloat shade1[4]       = { (GLfloat) 0/255, (GLfloat) 230/255, (GLfloat) 0/255, 1.0};
+        GLfloat shade2[4]       = { (GLfloat) 38/255, (GLfloat) 229/255, (GLfloat) 23/255, 1.0};
+        GLfloat shade3[4]       = { (GLfloat) 63/255, (GLfloat) 228/255, (GLfloat) 41/255, 1.0};
+        GLfloat shade4[4]       = { (GLfloat) 86/255, (GLfloat) 228/255, (GLfloat) 60/255, 1.0};
+        GLfloat shade5[4]       = { (GLfloat) 111/255, (GLfloat) 227/255, (GLfloat) 83/255, 1.0};
+        GLfloat shade6[4]       = { (GLfloat) 135/255, (GLfloat) 227/255, (GLfloat) 108/255, 1.0};
+        
+        /* Draw Cubes */
+        draw_square(vertA, vertB, vertC, vertD, shade1);
+        draw_square(vertF, vertE, vertH, vertG, shade6);
+        draw_square(vertE, vertA, vertD, vertH, shade2);
+        draw_square(vertB, vertF, vertG, vertC, shade5);
+        draw_square(vertE, vertF, vertB, vertA, shade3);
+        draw_square(vertD, vertC, vertG, vertH, shade4);
+        
+    } else if(color_scheme == 'b'){
+        
+        GLfloat shade1[4]       = { (GLfloat) 0.0, (GLfloat) 0/255, (GLfloat) 230/255, 1.0};
+        GLfloat shade2[4]       = { (GLfloat) 0.0, (GLfloat) 38/255, (GLfloat) 229/255, 1.0};
+        GLfloat shade3[4]       = { (GLfloat) 0.0, (GLfloat) 63/255, (GLfloat) 228/255, 1.0};
+        GLfloat shade4[4]       = { (GLfloat) 0.0, (GLfloat) 86/255, (GLfloat) 228/255, 1.0};
+        GLfloat shade5[4]       = { (GLfloat) 0.0, (GLfloat) 111/255, (GLfloat) 227/255, 1.0};
+        GLfloat shade6[4]       = { (GLfloat) 0.0, (GLfloat) 135/255, (GLfloat) 227/255, 1.0};
+        
+        /* Draw Cubes */
+        draw_square(vertA, vertB, vertC, vertD, shade1);
+        draw_square(vertF, vertE, vertH, vertG, shade6);
+        draw_square(vertE, vertA, vertD, vertH, shade2);
+        draw_square(vertB, vertF, vertG, vertC, shade5);
+        draw_square(vertE, vertF, vertB, vertA, shade3);
+        draw_square(vertD, vertC, vertG, vertH, shade4);
+        
+    }
     
 }
 
 int main(int argc, const char * argv[]) {
     int choice;
+    char color_scheme = '\0';
     std::cout<<"Please Choose The Program You Want"<<std::endl;
     std::cout<<"1. Hello Triangle"<<std::endl;
+    std::cout<<"2. Colorful Cube"<<std::endl;
     std::cin>>choice;
-    
+    if(choice == 2){
+        std::cout<<"Choose your scheme (r/g/b)"<<std::endl;
+        std::cin>>color_scheme;
+    }
         GLFWwindow *win;
     
         if(!glfwInit()){
@@ -111,7 +154,7 @@ int main(int argc, const char * argv[]) {
             if(choice == 1){
                 hello_triangle();
             }else if(choice == 2){
-                colorful_cube();
+                colorful_cube(color_scheme);
             }
         
             glfwSwapBuffers(win);
