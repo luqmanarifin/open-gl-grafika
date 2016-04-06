@@ -29,99 +29,56 @@ void hello_triangle(void){
     glEnd();
 }
 
-void draw_square(float ax, float ay, float az, float aw,
-                 float bx, float by, float bz, float bw,
-                 float cx, float cy, float cz, float cw,
-                 float dx, float dy, float dz, float dw,
-                 float color_r, float color_g, float color_b, float color_a){
+void draw_square(GLfloat * a, GLfloat * b, GLfloat * c, GLfloat * d, GLfloat * color){
     
-    //glTranslatef(0.01, 0, 0);
-    glRotated(0.1, 1, 0, 0);
-    glRotated(0.1, 0, 1, 0);
-    glRotated(0.1, 0, 0, 1);
+    glRotated(0.05, 1, 0, 0);
+    glRotated(0.05, 0, 1, 0);
+    glRotated(0.05, 0, 0, 1);
+    //glTranslatef(0.001, 0, 0);
     glBegin(GL_TRIANGLE_STRIP);
     {
-        glColor4f(color_r, color_g, color_b, color_a);
-        glVertex4f(ax, ay, az, aw);
-        glColor4f(color_r, color_g, color_b, color_a);
-        glVertex4f(bx, by, bz, bw);
-        glColor4f(color_r, color_g, color_b, color_a);
-        glVertex4f(dx, dy, dz, dw);
-        glColor4f(color_r, color_g, color_b, color_a);
-        glVertex4f(cx, cy, cz, cw);
+        glColor4f(color[0], color[1], color[2], color[3]);
+        glVertex4f(a[0], a[1], a[2], a[3]);
+        glColor4f(color[0], color[1], color[2], color[3]);
+        glVertex4f(b[0], b[1], b[2], b[3]);
+        glColor4f(color[0], color[1], color[2], color[3]);
+        glVertex4f(d[0], d[1], d[2], d[3]);
+        glColor4f(color[0], color[1], color[2], color[3]);
+        glVertex4f(c[0], c[1], c[2], c[3]);
     }
     glEnd();
-    
 }
 
 void colorful_cube(void){
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // clear background
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
     
-    float vertex_positions[] = {
-        -0.5,   -0.5,   0.5,    1.0,
-        -0.5,   0.5,    0.5,    1.0,
-        0.5,    0.5,    0.5,    1.0,
-        0.5,    -0.5,   0.5,    1.0,
-        -0.5,   -0.5,   -0.5,   1.0,
-        -0.5,   0.5,    -0.5,   1.0,
-        0.5,    0.5,    -0.5,   1.0,
-        0.5,    -0.5,   -0.5,   1.0
-    };
+    /*  Cube vertices */
+    GLfloat vertA[4] = { 0.5, 0.5, 0.5, 1.0};
+    GLfloat vertB[4] = {-0.5, 0.5, 0.5, 1.0};
+    GLfloat vertC[4] = {-0.5,-0.5, 0.5, 1.0};
+    GLfloat vertD[4] = { 0.5,-0.5, 0.5, 1.0};
+    GLfloat vertE[4] = { 0.5, 0.5,-0.5, 1.0};
+    GLfloat vertF[4] = {-0.5, 0.5,-0.5, 1.0};
+    GLfloat vertG[4] = {-0.5,-0.5,-0.5, 1.0};
+    GLfloat vertH[4] = { 0.5,-0.5,-0.5, 1.0};
     
-    float vertex_colors[] = {
-        1.0,  0.0,  0.0,  1.0, //red
-        1.0,  1.0,  0.0,  1.0, //yellow
-        0.0,  1.0,  0.0,  1.0, //green
-        0.0,  0.0,  1.0,  1.0, //blue
-        1.0,  0.0,  1.0,  1.0, //magenta
-        0.0,  1.0,  1.0,  1.0 //cyan
-    };
+    /*  Cube colors */
+    GLfloat yellow[4]       = { 1.0, 1.0, 0.0, 1.0};
+    GLfloat red[4]          = { 1.0, 0.0, 0.0, 1.0};
+    GLfloat green[4]        = { 0.0, 1.0, 0.0, 1.0};
+    GLfloat blue[4]         = { 0.0, 0.0, 1.0, 1.0};
+    GLfloat turquoise[4]    = { 0.0, 1.0, 1.0, 1.0};
+    GLfloat pink[4]         = { 1.0, 0.0, 1.0, 1.0};
 
-    //draw squares
-    draw_square( //0
-        vertex_positions[1*4 + 0], vertex_positions[1*4 + 1], vertex_positions[1*4 + 2], vertex_positions[1*4 + 3],
-        vertex_positions[0*4 + 0], vertex_positions[0*4 + 1], vertex_positions[0*4 + 2], vertex_positions[0*4 + 3],
-        vertex_positions[3*4 + 0], vertex_positions[3*4 + 1], vertex_positions[3*4 + 2], vertex_positions[3*4 + 3],
-        vertex_positions[2*4 + 0], vertex_positions[2*4 + 1], vertex_positions[2*4 + 2], vertex_positions[2*4 + 3],
-        vertex_colors[0*4 + 0], vertex_colors[0*4 + 1], vertex_colors[0*4 + 2], vertex_colors[0*4 + 3]
-    );
-    draw_square( //1
-        vertex_positions[2*4 + 0], vertex_positions[2*4 + 1], vertex_positions[2*4 + 2], vertex_positions[2*4 + 3],
-        vertex_positions[3*4 + 0], vertex_positions[3*4 + 1], vertex_positions[3*4 + 2], vertex_positions[3*4 + 3],
-        vertex_positions[7*4 + 0], vertex_positions[7*4 + 1], vertex_positions[7*4 + 2], vertex_positions[7*4 + 3],
-        vertex_positions[6*4 + 0], vertex_positions[6*4 + 1], vertex_positions[6*4 + 2], vertex_positions[6*4 + 3],
-        vertex_colors[1*4 + 0], vertex_colors[1*4 + 1], vertex_colors[1*4 + 2], vertex_colors[1*4 + 3]
-    );
-    draw_square( //2
-        vertex_positions[3*4 + 0], vertex_positions[3*4 + 1], vertex_positions[3*4 + 2], vertex_positions[3*4 + 3],
-        vertex_positions[0*4 + 0], vertex_positions[0*4 + 1], vertex_positions[0*4 + 2], vertex_positions[0*4 + 3],
-        vertex_positions[4*4 + 0], vertex_positions[4*4 + 1], vertex_positions[4*4 + 2], vertex_positions[4*4 + 3],
-        vertex_positions[7*4 + 0], vertex_positions[7*4 + 1], vertex_positions[7*4 + 2], vertex_positions[7*4 + 3],
-        vertex_colors[2*4 + 0], vertex_colors[2*4 + 1], vertex_colors[2*4 + 2], vertex_colors[2*4 + 3]
-    );
-    draw_square( //3
-        vertex_positions[6*4 + 0], vertex_positions[6*4 + 1], vertex_positions[6*4 + 2], vertex_positions[6*4 + 3],
-        vertex_positions[5*4 + 0], vertex_positions[5*4 + 1], vertex_positions[5*4 + 2], vertex_positions[5*4 + 3],
-        vertex_positions[1*4 + 0], vertex_positions[1*4 + 1], vertex_positions[1*4 + 2], vertex_positions[1*4 + 3],
-        vertex_positions[2*4 + 0], vertex_positions[2*4 + 1], vertex_positions[2*4 + 2], vertex_positions[2*4 + 3],
-        vertex_colors[3*4 + 0], vertex_colors[3*4 + 1], vertex_colors[3*4 + 2], vertex_colors[3*4 + 3]
-    );
-    draw_square( //4
-        vertex_positions[4*4 + 0], vertex_positions[4*4 + 1], vertex_positions[4*4 + 2], vertex_positions[4*4 + 3],
-        vertex_positions[5*4 + 0], vertex_positions[5*4 + 1], vertex_positions[5*4 + 2], vertex_positions[5*4 + 3],
-        vertex_positions[6*4 + 0], vertex_positions[6*4 + 1], vertex_positions[6*4 + 2], vertex_positions[6*4 + 3],
-        vertex_positions[7*4 + 0], vertex_positions[7*4 + 1], vertex_positions[7*4 + 2], vertex_positions[7*4 + 3],
-        vertex_colors[4*4 + 0], vertex_colors[4*4 + 1], vertex_colors[4*4 + 2], vertex_colors[4*4 + 3]
-    );
-    draw_square( //5
-        vertex_positions[5*4 + 0], vertex_positions[5*4 + 1], vertex_positions[5*4 + 2], vertex_positions[5*4 + 3],
-        vertex_positions[4*4 + 0], vertex_positions[4*4 + 1], vertex_positions[4*4 + 2], vertex_positions[4*4 + 3],
-        vertex_positions[0*4 + 0], vertex_positions[0*4 + 1], vertex_positions[0*4 + 2], vertex_positions[0*4 + 3],
-        vertex_positions[1*4 + 0], vertex_positions[1*4 + 1], vertex_positions[1*4 + 2], vertex_positions[1*4 + 3],
-        vertex_colors[5*4 + 0], vertex_colors[5*4 + 1], vertex_colors[5*4 + 2], vertex_colors[5*4 + 3]
-    );
-
+    /* Draw Cubes */
+    draw_square(vertA, vertB, vertC, vertD, yellow);
+    draw_square(vertF, vertE, vertH, vertG, red);
+    draw_square(vertE, vertA, vertD, vertH, green);
+    draw_square(vertB, vertF, vertG, vertC, blue);
+    draw_square(vertE, vertF, vertB, vertA, turquoise);
+    draw_square(vertD, vertC, vertG, vertH, pink);
     
     
 }
