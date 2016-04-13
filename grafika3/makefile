@@ -19,8 +19,14 @@ all: $(basename $(wildcard lesson[1-9].c lesson1[0-3].c))
 #
 dist: $(foreach file,$(basename $(wildcard lesson[1-9].c lesson1[0-3].c)),$(file).tar.gz)
 
-compile:
+jajal:
 	g++ jajal.c -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm -std=c++11 -Wall -o e
+
+compile:
+	g++ rubik.c -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm -std=c++11 -Wall -o rubik
+
+run:
+	./rubik
 
 # to produce, say, lesson1.tar.gz:
 #
