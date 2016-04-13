@@ -1,3 +1,9 @@
+// Created by Luqman A. Siswanto
+// Institut Teknologi Bandung
+// Email    : l.arifin.siswanto@gmail.com
+// GitHub   : @luqmanarifin
+// Rubik 3D OpenGL Simulator
+
 #ifndef __RUBIK_H_
 #define __RUBIK_H_
 
