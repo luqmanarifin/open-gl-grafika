@@ -61,9 +61,9 @@ void DrawGLScene()
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear The Screen And The Depth Buffer
 
   glLoadIdentity();				// Reset The View
-  gluLookAt( 0.0, 10.0f, -5.5,
-  0.0f, 0.0f, -6.0,
-  0.0f, 1.0f, 0.0f);
+  // gluLookAt( 0.0, 10.0f, -5.5,
+  // 0.0f, 0.0f, -6.0,
+  // 0.0f, 1.0f, 0.0f);
   glTranslatef(-1.5f,0.0f,-6.0f);		// Move Left 1.5 Units And Into The Screen 6.0
 	
   glRotatef(rtri,0.0f,1.0f,0.0f);		// Rotate The Triangle On The Y axis 
