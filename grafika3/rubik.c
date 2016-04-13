@@ -115,6 +115,45 @@ void DrawGLScene()
     }
   }
 
+  // draw bottom
+  for(int i = 0; i < 3; i++) {
+    for(int j = 0; j < 3; j++) {
+      glBegin(GL_POLYGON);              // start drawing a polygon
+      glColor3f(1.0f,1.0f,0.0f);
+      glVertex3f( i + 0.1f, 0.0f, -j - 0.1f);    // Bottom Left
+      glVertex3f( i + 0.9f, 0.0f, -j - 0.1f);    // Bottom Right
+      glVertex3f( i + 0.9f, 0.0f, -j - 0.9f);    // Top Right
+      glVertex3f( i + 0.1f, 0.0f, -j - 0.9f);    // Top Left
+      glEnd();           // we're done with the polygon (smooth color interpolation)
+    }
+  }
+
+  // draw back
+  for(int i = 0; i < 3; i++) {
+    for(int j = 0; j < 3; j++) {
+      glBegin(GL_POLYGON);              // start drawing a polygon
+      glColor3f(1.0f,0.5f,0.0f);
+      glVertex3f( i + 0.1f, j + 0.1f, -3.0f);    // Bottom Left
+      glVertex3f( i + 0.9f, j + 0.1f, -3.0f);    // Bottom Right
+      glVertex3f( i + 0.9f, j + 0.9f, -3.0f);    // Top Right
+      glVertex3f( i + 0.1f, j + 0.9f, -3.0f);    // Top Left
+      glEnd();           // we're done with the polygon (smooth color interpolation)
+    }
+  }
+
+  // draw left
+  for(int i = 0; i < 3; i++) {
+    for(int j = 0; j < 3; j++) {
+      glBegin(GL_POLYGON);              // start drawing a polygon
+      glColor3f(0.0f,1.0f,0.0f);
+      glVertex3f( 0.0f, j + 0.1f, -i - 0.1f);    // Bottom Left
+      glVertex3f( 0.0f, j + 0.1f, -i - 0.9f);    // Bottom Right
+      glVertex3f( 0.0f, j + 0.9f, -i - 0.9f);    // Top Right
+      glVertex3f( 0.0f, j + 0.9f, -i - 0.1f);    // Top Left
+      glEnd();           // we're done with the polygon (smooth color interpolation)
+    }
+  }
+
   // swap the buffers to display, since double buffering is used.
   glutSwapBuffers();
 }
