@@ -60,8 +60,31 @@ void ReSizeGLScene(int Width, int Height)
   glMatrixMode(GL_MODELVIEW);
 }
 
-void DrawRubikSceleton() {
 
+/* Draw the sceleton rubik (colored black), to avoid drawing rear of rubik */
+void DrawRubikSceleton() {
+  glColor3f(0.0f,0.0f,0.0f);
+
+  glBegin(GL_POLYGON);              // start drawing a polygon
+  glVertex3f( 0, 0, -0.1);    // Bottom Left
+  glVertex3f( 3, 0, -0.1);    // Bottom Right
+  glVertex3f( 3, 3, -0.1);    // Top Right
+  glVertex3f( 0, 3, -0.1);    // Top Left
+  glEnd();           // we're done with the polygon (smooth color interpolation)
+
+  glBegin(GL_POLYGON);              // start drawing a polygon
+  glVertex3f( 2.9, 0, 0);    // Bottom Left
+  glVertex3f( 2.9, 0, -3);    // Bottom Right
+  glVertex3f( 2.9, 3, -3);    // Top Right
+  glVertex3f( 2.9, 3, 0);    // Top Left
+  glEnd();           // we're done with the polygon (smooth color interpolation)
+
+  glBegin(GL_POLYGON);              // start drawing a polygon
+  glVertex3f( 0, 2.9, 0);    // Bottom Left
+  glVertex3f( 3, 2.9, 0);    // Bottom Right
+  glVertex3f( 3, 2.9, -3);    // Top Right
+  glVertex3f( 0, 2.9, -3);    // Top Left
+  glEnd();           // we're done with the polygon (smooth color interpolation)
 }
 
 /* The main drawing function. */
