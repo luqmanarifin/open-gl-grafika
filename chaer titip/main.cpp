@@ -102,7 +102,8 @@ void rubik_init() {
             d[pt][0] = i + 0.9; d[pt][1] = j + 0.1; d[pt][2] = 0;
             p[pt][0] = i + 0.9; p[pt][1] = j + 0.9; p[pt][2] = 0;
             q[pt][0] = i + 0.1; q[pt][1] = j + 0.9; q[pt][2] = 0;
-            a[pt] = RED;
+            //a[pt] = RED;
+            a[pt] = WHITE;
             ci[pt][0] = i + 0; ci[pt][1] = j + 0; ci[pt][2] = -0.1;
             di[pt][0] = i + 1; di[pt][1] = j + 0; di[pt][2] = -0.1;
             pi[pt][0] = i + 1; pi[pt][1] = j + 1; pi[pt][2] = -0.1;
@@ -118,7 +119,8 @@ void rubik_init() {
             d[pt][0] = 3; d[pt][1] = j + 0.1; d[pt][2] = -i - 0.9;
             p[pt][0] = 3; p[pt][1] = j + 0.9; p[pt][2] = -i - 0.9;
             q[pt][0] = 3; q[pt][1] = j + 0.9; q[pt][2] = -i - 0.1;
-            a[pt] = BLUE;
+            //a[pt] = BLUE;
+            a[pt] = WHITE;
             ci[pt][0] = 2.9; ci[pt][1] = j + 0; ci[pt][2] = -i;
             di[pt][0] = 2.9; di[pt][1] = j + 0; di[pt][2] = -i - 1;
             pi[pt][0] = 2.9; pi[pt][1] = j + 1; pi[pt][2] = -i - 1;
@@ -134,6 +136,7 @@ void rubik_init() {
             d[pt][0] = i + 0.9; d[pt][1] = 3; d[pt][2] = -j - 0.1;
             p[pt][0] = i + 0.9; p[pt][1] = 3; p[pt][2] = -j - 0.9;
             q[pt][0] = i + 0.1; q[pt][1] = 3; q[pt][2] = -j - 0.9;
+            //a[pt] = WHITE;
             a[pt] = WHITE;
             ci[pt][0] = i + 0; ci[pt][1] = 2.9; ci[pt][2] = -j;
             di[pt][0] = i + 1; di[pt][1] = 2.9; di[pt][2] = -j;
@@ -150,7 +153,8 @@ void rubik_init() {
             d[pt][0] = i + 0.9; d[pt][1] = j + 0.1; d[pt][2] = -3;
             p[pt][0] = i + 0.9; p[pt][1] = j + 0.9; p[pt][2] = -3;
             q[pt][0] = i + 0.1; q[pt][1] = j + 0.9; q[pt][2] = -3;
-            a[pt] = ORANGE;
+            //a[pt] = ORANGE;
+            a[pt] = WHITE;
             ci[pt][0] = i + 0; ci[pt][1] = j + 0; ci[pt][2] = -2.9;
             di[pt][0] = i + 1; di[pt][1] = j + 0; di[pt][2] = -2.9;
             pi[pt][0] = i + 1; pi[pt][1] = j + 1; pi[pt][2] = -2.9;
@@ -166,7 +170,8 @@ void rubik_init() {
             d[pt][0] = 0; d[pt][1] = j + 0.1; d[pt][2] = -i - 0.9;
             p[pt][0] = 0; p[pt][1] = j + 0.9; p[pt][2] = -i - 0.9;
             q[pt][0] = 0; q[pt][1] = j + 0.9; q[pt][2] = -i - 0.1;
-            a[pt] = GREEN;
+            //a[pt] = GREEN;
+            a[pt] = WHITE;
             ci[pt][0] = 0.1; ci[pt][1] = j + 0; ci[pt][2] = -i;
             di[pt][0] = 0.1; di[pt][1] = j + 0; di[pt][2] = -i - 1;
             pi[pt][0] = 0.1; pi[pt][1] = j + 1; pi[pt][2] = -i - 1;
@@ -182,7 +187,8 @@ void rubik_init() {
             d[pt][0] = i + 0.9; d[pt][1] = 0; d[pt][2] = -j - 0.1;
             p[pt][0] = i + 0.9; p[pt][1] = 0; p[pt][2] = -j - 0.9;
             q[pt][0] = i + 0.1; q[pt][1] = 0; q[pt][2] = -j - 0.9;
-            a[pt] = YELLOW;
+            //a[pt] = YELLOW;
+            a[pt] = WHITE;
             ci[pt][0] = i + 0; ci[pt][1] = 0.1; ci[pt][2] = -j;
             di[pt][0] = i + 1; di[pt][1] = 0.1; di[pt][2] = -j;
             pi[pt][0] = i + 1; pi[pt][1] = 0.1; pi[pt][2] = -j - 1;
@@ -419,18 +425,29 @@ float rtri = 0.0f;
 float rquad = 0.0f;
 
 /* A general OpenGL initialization function.  Sets all of the initial parameters. */
-void InitGL(int Width, int Height)	        // We call this right after our OpenGL window is created.
+void InitGL(int Width, int Height)          // We call this right after our OpenGL window is created.
 {
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);		// This Will Clear The Background Color To Black
-    glClearDepth(1.0);				// Enables Clearing Of The Depth Buffer
-    glDepthFunc(GL_LESS);				// The Type Of Depth Test To Do
-    glEnable(GL_DEPTH_TEST);			// Enables Depth Testing
-    glShadeModel(GL_SMOOTH);			// Enables Smooth Color Shading
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);       // This Will Clear The Background Color To Black
+    glClearDepth(1.0);              // Enables Clearing Of The Depth Buffer
+    glDepthFunc(GL_LESS);               // The Type Of Depth Test To Do
+    glEnable(GL_DEPTH_TEST);            // Enables Depth Testing
+    
+    /** NEW FOR LIGHTING **/
+    //glEnable(GL_DEPTH_TEST);
+    glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_LIGHTING); //Enable lighting
+    glEnable(GL_LIGHT0); //Enable light #0
+    glEnable(GL_LIGHT1); //Enable light #1
+    glEnable(GL_NORMALIZE); //Automatically normalize normals
+    //glShadeModel(GL_SMOOTH); //Enable smooth shading
+    /** END NEW FOR LIGHTING **/
+    
+    glShadeModel(GL_SMOOTH);            // Enables Smooth Color Shading
     
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();				// Reset The Projection Matrix
+    glLoadIdentity();               // Reset The Projection Matrix
     
-    gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f);	// Calculate The Aspect Ratio Of The Window
+    gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f);   // Calculate The Aspect Ratio Of The Window
     
     glMatrixMode(GL_MODELVIEW);
 }
@@ -438,10 +455,10 @@ void InitGL(int Width, int Height)	        // We call this right after our OpenG
 /* The function called when our window is resized (which shouldn't happen, because we're fullscreen) */
 void ReSizeGLScene(int Width, int Height)
 {
-    if (Height==0)				// Prevent A Divide By Zero If The Window Is Too Small
+    if (Height==0)              // Prevent A Divide By Zero If The Window Is Too Small
         Height=1;
     
-    glViewport(0, 0, Width, Height);		// Reset The Current Viewport And Perspective Transformation
+    glViewport(0, 0, Width, Height);        // Reset The Current Viewport And Perspective Transformation
     
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
@@ -478,6 +495,91 @@ void DrawRubikSceleton() {
     glEnd();           // we're done with the polygon (smooth color interpolation)
 }
 
+/*** BEGIN ADDED FOR LIGHTING ***/
+
+float _angle = -70.0f;
+
+//Draws the 3D scene
+void drawScene() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+    glTranslatef(0.0f, 0.0f, -8.0f);
+    
+    //Add ambient light
+    GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.2, 0.2, 0.2)
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+    
+    //Add positioned light
+    GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    
+    //Add directed light
+    GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.2, 0.2)
+    //Coming from the direction (-1, 0.5, 0.5)
+    GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
+    
+    glRotatef(_angle, 0.0f, 1.0f, 0.0f);
+    glColor3f(1.0f, 1.0f, 0.0f);
+    glBegin(GL_QUADS);
+    
+    //Front
+    glNormal3f(0.0f, 0.0f, 1.0f);
+    //glNormal3f(-1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.5f, -1.0f, 1.5f);
+    //glNormal3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(1.5f, -1.0f, 1.5f);
+    //glNormal3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(1.5f, 1.0f, 1.5f);
+    //glNormal3f(-1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.5f, 1.0f, 1.5f);
+    
+    //Right
+    glNormal3f(1.0f, 0.0f, 0.0f);
+    //glNormal3f(1.0f, 0.0f, -1.0f);
+    glVertex3f(1.5f, -1.0f, -1.5f);
+    //glNormal3f(1.0f, 0.0f, -1.0f);
+    glVertex3f(1.5f, 1.0f, -1.5f);
+    //glNormal3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(1.5f, 1.0f, 1.5f);
+    //glNormal3f(1.0f, 0.0f, 1.0f);
+    glVertex3f(1.5f, -1.0f, 1.5f);
+    
+    //Back
+    glNormal3f(0.0f, 0.0f, -1.0f);
+    //glNormal3f(-1.0f, 0.0f, -1.0f);
+    glVertex3f(-1.5f, -1.0f, -1.5f);
+    //glNormal3f(-1.0f, 0.0f, -1.0f);
+    glVertex3f(-1.5f, 1.0f, -1.5f);
+    //glNormal3f(1.0f, 0.0f, -1.0f);
+    glVertex3f(1.5f, 1.0f, -1.5f);
+    //glNormal3f(1.0f, 0.0f, -1.0f);
+    glVertex3f(1.5f, -1.0f, -1.5f);
+    
+    //Left
+    glNormal3f(-1.0f, 0.0f, 0.0f);
+    //glNormal3f(-1.0f, 0.0f, -1.0f);
+    glVertex3f(-1.5f, -1.0f, -1.5f);
+    //glNormal3f(-1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.5f, -1.0f, 1.5f);
+    //glNormal3f(-1.0f, 0.0f, 1.0f);
+    glVertex3f(-1.5f, 1.0f, 1.5f);
+    //glNormal3f(-1.0f, 0.0f, -1.0f);
+    glVertex3f(-1.5f, 1.0f, -1.5f);
+    
+    glEnd();
+    
+    glutSwapBuffers();
+}
+
+/*** END ADDED FOR LIGHTING ***/
+
 /* The main drawing function. */
 void DrawGLScene()
 {
@@ -492,6 +594,47 @@ void DrawGLScene()
     glTranslatef(pusat[0], pusat[1], pusat[2]);
     glRotatef(sudut, sumbu[0], sumbu[1], sumbu[2]);
     glTranslatef(-pusat[0], -pusat[1], -pusat[2]);
+    
+    /*** BEGIN LIGHTING ***/
+    
+    /*//Add ambient light
+    GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.2, 0.2, 0.2)
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+    
+    //Add positioned light
+    GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
+    GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+    
+    //Add directed light
+    GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.2, 0.2)
+    //Coming from the direction (-1, 0.5, 0.5)
+    GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};
+    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);*/
+    
+    
+    // Lighting set up
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    
+    // Set lighting intensity and color
+    GLfloat qaAmbientLight[]    = {0.2, 0.2, 0.2, 1.0};
+    GLfloat qaDiffuseLight[]    = {0.8, 0.8, 0.8, 1.0};
+    GLfloat qaSpecularLight[]   = {1.0, 1.0, 1.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+    
+    // Set the light position
+    GLfloat qaLightPosition[]   = {.5, .5, 0.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
+    
+    //glRotatef(_angle, 0.0f, 1.0f, 0.0f);
+    //glColor3f(1.0f, 1.0f, 0.0f);
+    
+    /*** END LIGHTING ***/
+    
     for(int i = 0; i < 54; i++) {
         if(isRotated[i]) {
             glBegin(GL_POLYGON);
@@ -780,42 +923,42 @@ void keyPressed(unsigned char key, int x, int y)
 /*
 void DrawGLScene()
 {
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		// Clear The Screen And The Depth Buffer
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Clear The Screen And The Depth Buffer
     
-    glLoadIdentity();				// Reset The View
+    glLoadIdentity();               // Reset The View
     // gluLookAt( 0.0, 10.0f, -5.5,
     // 0.0f, 0.0f, -6.0,
     // 0.0f, 1.0f, 0.0f);
-    glTranslatef(-1.5f,0.0f,-6.0f);		// Move Left 1.5 Units And Into The Screen 6.0
+    glTranslatef(-1.5f,0.0f,-6.0f);     // Move Left 1.5 Units And Into The Screen 6.0
     
-    glRotatef(rtri,0.0f,1.0f,0.0f);		// Rotate The Triangle On The Y axis
+    glRotatef(rtri,0.0f,1.0f,0.0f);     // Rotate The Triangle On The Y axis
     // draw a triangle (in smooth coloring mode)
-    glBegin(GL_POLYGON);				// start drawing a polygon
-    glColor3f(1.0f,0.0f,0.0f);			// Set The Color To Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);		// Top
-    glColor3f(0.0f,1.0f,0.0f);			// Set The Color To Green
-    glVertex3f( 1.0f,-1.0f, 0.0f);		// Bottom Right
-    glColor3f(0.0f,0.0f,1.0f);			// Set The Color To Blue
-    glVertex3f(-1.0f,-1.0f, 0.0f);		// Bottom Left
-    glEnd();					// we're done with the polygon (smooth color interpolation)
+    glBegin(GL_POLYGON);                // start drawing a polygon
+    glColor3f(1.0f,0.0f,0.0f);          // Set The Color To Red
+    glVertex3f( 0.0f, 1.0f, 0.0f);      // Top
+    glColor3f(0.0f,1.0f,0.0f);          // Set The Color To Green
+    glVertex3f( 1.0f,-1.0f, 0.0f);      // Bottom Right
+    glColor3f(0.0f,0.0f,1.0f);          // Set The Color To Blue
+    glVertex3f(-1.0f,-1.0f, 0.0f);      // Bottom Left
+    glEnd();                    // we're done with the polygon (smooth color interpolation)
     
-    glLoadIdentity();				// make sure we're no longer rotated.
-    glTranslatef(1.5f,0.0f, -6.0f);		// Move Right 3 Units, and back into the screen 6.0
+    glLoadIdentity();               // make sure we're no longer rotated.
+    glTranslatef(1.5f,0.0f, -6.0f);     // Move Right 3 Units, and back into the screen 6.0
     glTranslatef(0.0f,-1.0f, 0.0f);
     
-    glRotatef(rquad,1.0f,0.0f,0.0f);		// Rotate The Quad On The X axis
+    glRotatef(rquad,1.0f,0.0f,0.0f);        // Rotate The Quad On The X axis
     glTranslatef(0.0f,1.0f, 0.0f);
     // draw a square (quadrilateral)
-    glColor3f(0.5f,0.5f,1.0f);			// set color to a blue shade.
-    glBegin(GL_QUADS);				// start drawing a polygon (4 sided)
-    glVertex3f(-1.0f, 1.0f, 0.0f);		// Top Left
-    glVertex3f( 1.0f, 1.0f, 0.0f);		// Top Right
-    glVertex3f( 1.0f,-1.0f, 0.0f);		// Bottom Right
-    glVertex3f(-1.0f,-1.0f, 0.0f);		// Bottom Left
-    glEnd();					// done with the polygon
+    glColor3f(0.5f,0.5f,1.0f);          // set color to a blue shade.
+    glBegin(GL_QUADS);              // start drawing a polygon (4 sided)
+    glVertex3f(-1.0f, 1.0f, 0.0f);      // Top Left
+    glVertex3f( 1.0f, 1.0f, 0.0f);      // Top Right
+    glVertex3f( 1.0f,-1.0f, 0.0f);      // Bottom Right
+    glVertex3f(-1.0f,-1.0f, 0.0f);      // Bottom Left
+    glEnd();                    // done with the polygon
     
-    rtri+=5.0f;					// Increase The Rotation Variable For The Triangle
-    rquad+=5.0f;					// Decrease The Rotation Variable For The Quad
+    rtri+=5.0f;                 // Increase The Rotation Variable For The Triangle
+    rquad+=5.0f;                    // Decrease The Rotation Variable For The Quad
     
     // swap the buffers to display, since double buffering is used.
     glutSwapBuffers();
@@ -865,12 +1008,15 @@ int main(int argc, char **argv)
     
     /* Register the function to do all our OpenGL drawing. */
     glutDisplayFunc(&DrawGLScene);
+    //glutDisplayFunc(&drawScene);
     
     /* Go fullscreen.  This is as soon as possible. */
     //glutFullScreen();
     
     /* Even if there are no events, redraw our gl scene. */
     glutIdleFunc(&DrawGLScene);
+    //glutIdleFunc(&drawScene);
+
     
     /* Register the function called when our window is resized. */
     glutReshapeFunc(&ReSizeGLScene);
