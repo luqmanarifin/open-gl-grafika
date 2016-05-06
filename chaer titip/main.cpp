@@ -28,7 +28,7 @@ using namespace std;
 /*** BEGIN RUBIK.H ***/
 
 /* How smooth the animation of rotation. makin kecil, putarannya makin halus. ANGLE in degree */
-float ANGLE = 10;
+float ANGLE = 1;
 const int inf = -1e9;
 
 struct Color {
@@ -595,45 +595,7 @@ void DrawGLScene()
     glRotatef(sudut, sumbu[0], sumbu[1], sumbu[2]);
     glTranslatef(-pusat[0], -pusat[1], -pusat[2]);
     
-    /*** BEGIN LIGHTING ***/
     
-    /*//Add ambient light
-    GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.2, 0.2, 0.2)
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
-    
-    //Add positioned light
-    GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
-    GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
-    glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
-    
-    //Add directed light
-    GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.2, 0.2)
-    //Coming from the direction (-1, 0.5, 0.5)
-    GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};
-    glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
-    glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);*/
-    
-    
-    // Lighting set up
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    
-    // Set lighting intensity and color
-    GLfloat qaAmbientLight[]    = {0.2, 0.2, 0.2, 1.0};
-    GLfloat qaDiffuseLight[]    = {0.8, 0.8, 0.8, 1.0};
-    GLfloat qaSpecularLight[]   = {1.0, 1.0, 1.0, 1.0};
-    glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
-    
-    // Set the light position
-    GLfloat qaLightPosition[]   = {.5, .5, 0.0, 1.0};
-    glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
-    
-    //glRotatef(_angle, 0.0f, 1.0f, 0.0f);
-    //glColor3f(1.0f, 1.0f, 0.0f);
-    
-    /*** END LIGHTING ***/
     
     for(int i = 0; i < 54; i++) {
         if(isRotated[i]) {
@@ -660,6 +622,55 @@ void DrawGLScene()
     gluLookAt(  2, 2, -1,
               0, 0, -3,
               0, 1, 0);
+    
+    /*** BEGIN LIGHTING ***/
+    
+    /*//Add ambient light
+     GLfloat ambientColor[] = {0.2f, 0.2f, 0.2f, 1.0f}; //Color (0.2, 0.2, 0.2)
+     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientColor);
+     
+     //Add positioned light
+     GLfloat lightColor0[] = {0.5f, 0.5f, 0.5f, 1.0f}; //Color (0.5, 0.5, 0.5)
+     GLfloat lightPos0[] = {4.0f, 0.0f, 8.0f, 1.0f}; //Positioned at (4, 0, 8)
+     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor0);
+     glLightfv(GL_LIGHT0, GL_POSITION, lightPos0);
+     
+     //Add directed light
+     GLfloat lightColor1[] = {0.5f, 0.2f, 0.2f, 1.0f}; //Color (0.5, 0.2, 0.2)
+     //Coming from the direction (-1, 0.5, 0.5)
+     GLfloat lightPos1[] = {-1.0f, 0.5f, 0.5f, 0.0f};
+     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
+     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);*/
+    
+    
+    // Lighting set up
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    
+    // Set material properties
+    GLfloat qaBlack[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
+    GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
+    glMaterialfv(GL_FRONT, GL_AMBIENT, qaWhite);//was green
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, qaWhite);// was green
+    glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);//was white
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
+    
+    // Set lighting intensity and color
+    GLfloat qaAmbientLight[]    = {0.2, 0.2, 0.2, 1.0};
+    GLfloat qaDiffuseLight[]    = {0.8, 0.8, 0.8, 1.0};
+    GLfloat qaSpecularLight[]   = {1.0, 1.0, 1.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_AMBIENT, qaAmbientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, qaDiffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, qaSpecularLight);
+    
+    // Set the light position
+    GLfloat qaLightPosition[]   = {.5, .5, 0.0, 1.0};
+    glLightfv(GL_LIGHT0, GL_POSITION, qaLightPosition);
+    
+    //glRotatef(_angle, 0.0f, 1.0f, 0.0f);
+    //glColor3f(1.0f, 1.0f, 0.0f);
+    
+    /*** END LIGHTING ***/
     
     for(int i = 0; i < 54; i++) {
         if(!isRotated[i]) {
