@@ -927,74 +927,6 @@ void keyPressed(unsigned char key, int x, int y)
 
 /*** END RUBIK.C ***/
 
-
-/*** BEGIN OLD ***/
-
-/* The main drawing function. */
-/*
-void DrawGLScene()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);     // Clear The Screen And The Depth Buffer
-    
-    glLoadIdentity();               // Reset The View
-    // gluLookAt( 0.0, 10.0f, -5.5,
-    // 0.0f, 0.0f, -6.0,
-    // 0.0f, 1.0f, 0.0f);
-    glTranslatef(-1.5f,0.0f,-6.0f);     // Move Left 1.5 Units And Into The Screen 6.0
-    
-    glRotatef(rtri,0.0f,1.0f,0.0f);     // Rotate The Triangle On The Y axis
-    // draw a triangle (in smooth coloring mode)
-    glBegin(GL_POLYGON);                // start drawing a polygon
-    glColor3f(1.0f,0.0f,0.0f);          // Set The Color To Red
-    glVertex3f( 0.0f, 1.0f, 0.0f);      // Top
-    glColor3f(0.0f,1.0f,0.0f);          // Set The Color To Green
-    glVertex3f( 1.0f,-1.0f, 0.0f);      // Bottom Right
-    glColor3f(0.0f,0.0f,1.0f);          // Set The Color To Blue
-    glVertex3f(-1.0f,-1.0f, 0.0f);      // Bottom Left
-    glEnd();                    // we're done with the polygon (smooth color interpolation)
-    
-    glLoadIdentity();               // make sure we're no longer rotated.
-    glTranslatef(1.5f,0.0f, -6.0f);     // Move Right 3 Units, and back into the screen 6.0
-    glTranslatef(0.0f,-1.0f, 0.0f);
-    
-    glRotatef(rquad,1.0f,0.0f,0.0f);        // Rotate The Quad On The X axis
-    glTranslatef(0.0f,1.0f, 0.0f);
-    // draw a square (quadrilateral)
-    glColor3f(0.5f,0.5f,1.0f);          // set color to a blue shade.
-    glBegin(GL_QUADS);              // start drawing a polygon (4 sided)
-    glVertex3f(-1.0f, 1.0f, 0.0f);      // Top Left
-    glVertex3f( 1.0f, 1.0f, 0.0f);      // Top Right
-    glVertex3f( 1.0f,-1.0f, 0.0f);      // Bottom Right
-    glVertex3f(-1.0f,-1.0f, 0.0f);      // Bottom Left
-    glEnd();                    // done with the polygon
-    
-    rtri+=5.0f;                 // Increase The Rotation Variable For The Triangle
-    rquad+=5.0f;                    // Decrease The Rotation Variable For The Quad
-    
-    // swap the buffers to display, since double buffering is used.
-    glutSwapBuffers();
-}*/
-
-/* The function called whenever a key is pressed. */
-
-//void keyPressed(unsigned char key, int x, int y)
-//{
-    /* sleep to avoid thrashing this procedure */
-    //usleep(100);
-    
-    /* If escape is pressed, kill everything. */
-    //if (key == ESCAPE)
-    //{
-        /* shut down our window */
-        //glutDestroyWindow(window);
-        
-        /* exit the program...normal termination. */
-        //exit(0);           //TODO FIX
-    //}
-//}
-
-/*** END OLD ***/
-
 int main(int argc, char **argv)
 {
     /* Initialize GLUT state - glut will take any command line arguments that pertain to it or
@@ -1015,7 +947,7 @@ int main(int argc, char **argv)
     glutInitWindowPosition(0, 0);
     
     /* Open a window */
-    window = glutCreateWindow("Jeff Molofee's GL Code Tutorial ... NeHe '99");
+    window = glutCreateWindow("Rubik with Lighting");
     
     /* Register the function to do all our OpenGL drawing. */
     glutDisplayFunc(&DrawGLScene);

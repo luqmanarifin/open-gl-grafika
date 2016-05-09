@@ -13,7 +13,7 @@
 using namespace std;
 
 /* How smooth the animation of rotation. makin kecil, putarannya makin halus. ANGLE in degree */
-float ANGLE = 10;
+float ANGLE = 1;
 const int inf = -1e9;
 
 struct Color {

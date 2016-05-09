@@ -46,6 +46,20 @@ void InitGL(int Width, int Height)          // We call this right after our Open
   gluPerspective(45.0f,(GLfloat)Width/(GLfloat)Height,0.1f,100.0f); // Calculate The Aspect Ratio Of The Window
 
   glMatrixMode(GL_MODELVIEW);
+
+  glEnable( GL_TEXTURE_2D );
+  glShadeModel(GL_SMOOTH);                        // Enable Smooth Shading
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);          // Really Nice Perspective Calculations
+
+	glEnable(GL_COLOR_MATERIAL);
+	glColorMaterial(GL_FRONT, GL_AMBIENT_AND_DIFFUSE);
+
+  glShadeModel(GL_SMOOTH);
+	// Somewhere in the initialization part of your program…
+	glEnable(GL_LIGHTING);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHT1);
+    
 }
 
 /* The function called when our window is resized (which shouldn't happen, because we're fullscreen) */
@@ -63,31 +77,64 @@ void ReSizeGLScene(int Width, int Height)
   glMatrixMode(GL_MODELVIEW);
 }
 
+GLuint LoadTextureRAW( const char * filename, int wrap ) {
+  GLuint texture;
+  int width, height;
+  char * data;
+  FILE * file;
 
-/* Draw the sceleton rubik (colored black), to avoid drawing rear of rubik */
-void DrawRubikSceleton() {
-  glColor3f(0.0f,0.0f,0.0f);
+  // open texture data
+  file = fopen( filename, "rb" );
+  if ( file == NULL ) return 0;
 
-  glBegin(GL_POLYGON);              // start drawing a polygon
-  glVertex3f( 0, 0, -0.1);    // Bottom Left
-  glVertex3f( 3, 0, -0.1);    // Bottom Right
-  glVertex3f( 3, 3, -0.1);    // Top Right
-  glVertex3f( 0, 3, -0.1);    // Top Left
-  glEnd();           // we're done with the polygon (smooth color interpolation)
+  // allocate buffer
+  width = 16;
+  height = 16;
+  data = (char*) malloc( width * height * 3 );
 
-  glBegin(GL_POLYGON);              // start drawing a polygon
-  glVertex3f( 2.9, 0, 0);    // Bottom Left
-  glVertex3f( 2.9, 0, -3);    // Bottom Right
-  glVertex3f( 2.9, 3, -3);    // Top Right
-  glVertex3f( 2.9, 3, 0);    // Top Left
-  glEnd();           // we're done with the polygon (smooth color interpolation)
+  // read texture data
+  fread( data, width * height * 3, 1, file );
+  fclose( file );
 
-  glBegin(GL_POLYGON);              // start drawing a polygon
-  glVertex3f( 0, 2.9, 0);    // Bottom Left
-  glVertex3f( 3, 2.9, 0);    // Bottom Right
-  glVertex3f( 3, 2.9, -3);    // Top Right
-  glVertex3f( 0, 2.9, -3);    // Top Left
-  glEnd();           // we're done with the polygon (smooth color interpolation)
+  // allocate a texture name
+  glGenTextures( 1, &texture );
+
+  // select our current texture
+  glBindTexture( GL_TEXTURE_2D, texture );
+
+  // select modulate to mix texture with color for shading
+  glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );
+
+  glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, width, height, 0, GL_BGR, GL_UNSIGNED_BYTE, data);
+
+  // when texture area is small, bilinear filter the closest MIP map
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER,
+                   GL_LINEAR_MIPMAP_NEAREST );
+  // when texture area is large, bilinear filter the first MIP map
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+
+  // if wrap is true, the texture wraps over at the edges (repeat)
+  //       ... false, the texture ends at the edges (clamp)
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S,
+                   wrap ? GL_REPEAT : GL_CLAMP );
+  glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T,
+                   wrap ? GL_REPEAT : GL_CLAMP );
+
+  // build our texture MIP maps
+  gluBuild2DMipmaps( GL_TEXTURE_2D, 3, width,
+    height, GL_RGB, GL_UNSIGNED_BYTE, data );
+
+  // free buffer
+  free( data );
+
+  return texture;
+
+}
+
+void FreeTexture( GLuint texture ) {
+
+  glDeleteTextures( 1, &texture );
+
 }
 
 /* The main drawing function. */
@@ -95,22 +142,71 @@ void DrawGLScene()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
 
+    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+    
+    // Set material properties
+/*    GLfloat qaBlack[] = {0.0, 0.0, 0.0, 1.0};
+    GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
+    GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
+    glMaterialfv(GL_FRONT, GL_AMBIENT, qaWhite);//was green
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, qaWhite);// was green
+    glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);//was white
+    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);*/
+
+	// Create light components
+	GLfloat ambientLight[] = { 1.0f, 0.2f, 0.2f, 1.0f };
+	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
+	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    GLfloat position[]   = {-2.0f, 0.0f, 0.0f, 1.0};
+
+	// Assign created components to GL_LIGHT0
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+	glLightfv(GL_LIGHT0, GL_POSITION, position);
+
+	GLfloat ambientLightT[] = { 1.0f, 1.0f, 0.0f, 1.0f };
+	GLfloat diffuseLightT[] = { 0.8f, 0.8f, 0.8, 1.0f };
+	GLfloat specularLightT[] = { 0.5f, 0.5f, 0.5f, 1.0f };
+    GLfloat positionTwo[]   = {0.0f, -4.0f, 0.0f, 1.0f};
+
+	// Assign created components to GL_LIGHT0
+	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLightT);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLightT);
+	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLightT);
+	glLightfv(GL_LIGHT1, GL_POSITION, positionTwo);
+
+
   glLoadIdentity();       // Reset The View
   glTranslatef(0.0f,0.0f,-6.0f);   // Move Left 1.5 Units And Into The Screen 6.0
   gluLookAt(  2, 2, -1,
               0, 0, -3,
-              0, 1, 0);
+              0, 1, 0);  
+
+  GLuint texture;
+  texture = LoadTextureRAW( "die.raw", 1 );
   
   glTranslatef(pusat[0], pusat[1], pusat[2]);
   glRotatef(sudut, sumbu[0], sumbu[1], sumbu[2]);
   glTranslatef(-pusat[0], -pusat[1], -pusat[2]);
   for(int i = 0; i < 54; i++) {
     if(isRotated[i]) {
+      glBindTexture( GL_TEXTURE_2D, texture );
+
       glBegin(GL_POLYGON);
       glColor3f(a[i].r, a[i].g, a[i].b);
+      glColor3f(a[i].r, a[i].g, a[i].b);
+
+      glTexCoord2f(0.0f, 0.0f);
       glVertex3f(c[i][0], c[i][1], c[i][2]);
+
+      glTexCoord2f(0.0f, 1.0f);
       glVertex3f(d[i][0], d[i][1], d[i][2]);
+
+      glTexCoord2f(1.0f, 1.0f);
       glVertex3f(p[i][0], p[i][1], p[i][2]);
+      
+      glTexCoord2f(1.0f, 0.0f);
       glVertex3f(q[i][0], q[i][1], q[i][2]);
       glEnd();
 
@@ -129,15 +225,26 @@ void DrawGLScene()
   gluLookAt(  2, 2, -1,
               0, 0, -3,
               0, 1, 0);
-  
+
   for(int i = 0; i < 54; i++) {
     if(!isRotated[i]) {
+      glBindTexture( GL_TEXTURE_2D, texture );
+
       glBegin(GL_POLYGON);
       glColor3f(a[i].r, a[i].g, a[i].b);
-      glVertex3f(c[i][0], c[i][1], c[i][2]);
-      glVertex3f(d[i][0], d[i][1], d[i][2]);
-      glVertex3f(p[i][0], p[i][1], p[i][2]);
-      glVertex3f(q[i][0], q[i][1], q[i][2]);
+
+      glTexCoord2f(0.0f, 0.0f);
+      glVertex3f(c[i][0], c[i][1], c[i][2]); // bottom left
+      
+      glTexCoord2f(0.0f, 1.0f);
+      glVertex3f(d[i][0], d[i][1], d[i][2]); // bottom right
+
+      glTexCoord2f(1.0f, 1.0f);
+      glVertex3f(p[i][0], p[i][1], p[i][2]); // top right
+
+      glTexCoord2f(1.0f, 0.0f);
+      glVertex3f(q[i][0], q[i][1], q[i][2]); // top left
+
       glEnd();
 
       glBegin(GL_POLYGON);
@@ -147,8 +254,10 @@ void DrawGLScene()
       glVertex3f(pi[i][0], pi[i][1], pi[i][2]);
       glVertex3f(qi[i][0], qi[i][1], qi[i][2]);
       glEnd();
+      
     }
   }
+  FreeTexture( texture );
   
   // swap the buffers to display, since double buffering is used.
   glutSwapBuffers();

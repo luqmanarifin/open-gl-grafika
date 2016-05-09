@@ -78,8 +78,8 @@ GLuint LoadTextureRAW( const char * filename, int wrap ) {
   if ( file == NULL ) return 0;
 
   // allocate buffer
-  width = 16;
-  height = 16;
+  width = 256;
+  height = 256;
   data = (char*) malloc( width * height * 3 );
 
   // read texture data
@@ -139,7 +139,7 @@ void DrawGLScene()
               0, 1, 0);  
 
   GLuint texture;
-  texture = LoadTextureRAW( "die.raw", 1 );
+  texture = LoadTextureRAW( "texture.raw", 1 );
   
   glTranslatef(pusat[0], pusat[1], pusat[2]);
   glRotatef(sudut, sumbu[0], sumbu[1], sumbu[2]);
