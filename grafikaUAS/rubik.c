@@ -142,22 +142,22 @@ void DrawGLScene()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);   // Clear The Screen And The Depth Buffer
 
-    glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
-    
-    // Set material properties
-/*    GLfloat qaBlack[] = {0.0, 0.0, 0.0, 1.0};
-    GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
-    GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
-    glMaterialfv(GL_FRONT, GL_AMBIENT, qaWhite);//was green
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, qaWhite);// was green
-    glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);//was white
-    glMaterialf(GL_FRONT, GL_SHININESS, 60.0);*/
+  glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, GL_TRUE);
+  
+  // Set material properties
+  GLfloat qaBlack[] = {0.0, 0.0, 0.0, 1.0};
+  GLfloat qaGreen[] = {0.0, 1.0, 0.0, 1.0};
+  GLfloat qaWhite[] = {1.0, 1.0, 1.0, 1.0};
+  glMaterialfv(GL_FRONT, GL_AMBIENT, qaWhite);//was green
+  glMaterialfv(GL_FRONT, GL_DIFFUSE, qaWhite);// was green
+  glMaterialfv(GL_FRONT, GL_SPECULAR, qaWhite);//was white
+  glMaterialf(GL_FRONT, GL_SHININESS, 60.0);
 
 	// Create light components
-	GLfloat ambientLight[] = { 1.0f, 0.2f, 0.2f, 1.0f };
+	GLfloat ambientLight[] = { 0.2f, 0.2f, 0.2f, 1.0f };
 	GLfloat diffuseLight[] = { 0.8f, 0.8f, 0.8, 1.0f };
-	GLfloat specularLight[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    GLfloat position[]   = {-2.0f, 0.0f, 0.0f, 1.0};
+	GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+  GLfloat position[]   = {4, 4, -4, 1};
 
 	// Assign created components to GL_LIGHT0
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
@@ -165,17 +165,17 @@ void DrawGLScene()
 	glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
 	glLightfv(GL_LIGHT0, GL_POSITION, position);
 
-	GLfloat ambientLightT[] = { 1.0f, 1.0f, 0.0f, 1.0f };
-	GLfloat diffuseLightT[] = { 0.8f, 0.8f, 0.8, 1.0f };
-	GLfloat specularLightT[] = { 0.5f, 0.5f, 0.5f, 1.0f };
-    GLfloat positionTwo[]   = {0.0f, -4.0f, 0.0f, 1.0f};
+
+	GLfloat ambientLightT[] = { 0.0f, 0.2f, 0.2f, 1.0f };
+	GLfloat diffuseLightT[] = { 0.0f, 0.8f, 0.8f, 1.0f };
+	GLfloat specularLightT[] = { 0.0f, 1.0f, 1.0f, 1.0f };
+  GLfloat positionTwo[]   = { -1, 4, 1, 0 };
 
 	// Assign created components to GL_LIGHT0
 	glLightfv(GL_LIGHT1, GL_AMBIENT, ambientLightT);
 	glLightfv(GL_LIGHT1, GL_DIFFUSE, diffuseLightT);
 	glLightfv(GL_LIGHT1, GL_SPECULAR, specularLightT);
 	glLightfv(GL_LIGHT1, GL_POSITION, positionTwo);
-
 
   glLoadIdentity();       // Reset The View
   glTranslatef(0.0f,0.0f,-6.0f);   // Move Left 1.5 Units And Into The Screen 6.0
@@ -197,6 +197,30 @@ void DrawGLScene()
       glColor3f(a[i].r, a[i].g, a[i].b);
       glColor3f(a[i].r, a[i].g, a[i].b);
 
+      switch (i/9) {
+        case 0 :
+          glNormal3f(0.0, 0.0, -1.0);
+          break;
+        case 1 :
+          glNormal3f(-1.0, 0.0, 0.0);
+          break;
+        case 2 :
+          glNormal3f(0.0, -1.0, 0.0);
+          break;
+        case 3 :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+        case 4 :
+          glNormal3f(1.0, 0.0, 0.0);
+          break;
+        case 5 :
+          glNormal3f(0.0, 1.0, 0.0);
+          break;
+        default :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+      }
+
       glTexCoord2f(0.0f, 0.0f);
       glVertex3f(c[i][0], c[i][1], c[i][2]);
 
@@ -211,6 +235,29 @@ void DrawGLScene()
       glEnd();
 
       glBegin(GL_POLYGON);
+      switch (i/9) {
+        case 0 :
+          glNormal3f(0.0, 0.0, -1.0);
+          break;
+        case 1 :
+          glNormal3f(-1.0, 0.0, 0.0);
+          break;
+        case 2 :
+          glNormal3f(0.0, -1.0, 0.0);
+          break;
+        case 3 :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+        case 4 :
+          glNormal3f(1.0, 0.0, 0.0);
+          break;
+        case 5 :
+          glNormal3f(0.0, 1.0, 0.0);
+          break;
+        default :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+      }
       glColor3f(BLACK.r, BLACK.g, BLACK.b);
       glVertex3f(ci[i][0], ci[i][1], ci[i][2]);
       glVertex3f(di[i][0], di[i][1], di[i][2]);
@@ -233,6 +280,30 @@ void DrawGLScene()
       glBegin(GL_POLYGON);
       glColor3f(a[i].r, a[i].g, a[i].b);
 
+      switch (i/9) {
+        case 0 :
+          glNormal3f(0.0, 0.0, -1.0);
+          break;
+        case 1 :
+          glNormal3f(-1.0, 0.0, 0.0);
+          break;
+        case 2 :
+          glNormal3f(0.0, -1.0, 0.0);
+          break;
+        case 3 :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+        case 4 :
+          glNormal3f(1.0, 0.0, 0.0);
+          break;
+        case 5 :
+          glNormal3f(0.0, 1.0, 0.0);
+          break;
+        default :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+      }
+
       glTexCoord2f(0.0f, 0.0f);
       glVertex3f(c[i][0], c[i][1], c[i][2]); // bottom left
       
@@ -248,6 +319,29 @@ void DrawGLScene()
       glEnd();
 
       glBegin(GL_POLYGON);
+      switch (i/9) {
+        case 0 :
+          glNormal3f(0.0, 0.0, -1.0);
+          break;
+        case 1 :
+          glNormal3f(-1.0, 0.0, 0.0);
+          break;
+        case 2 :
+          glNormal3f(0.0, -1.0, 0.0);
+          break;
+        case 3 :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+        case 4 :
+          glNormal3f(1.0, 0.0, 0.0);
+          break;
+        case 5 :
+          glNormal3f(0.0, 1.0, 0.0);
+          break;
+        default :
+          glNormal3f(0.0, 0.0, 1.0);
+          break;
+      }
       glColor3f(BLACK.r, BLACK.g, BLACK.b);
       glVertex3f(ci[i][0], ci[i][1], ci[i][2]);
       glVertex3f(di[i][0], di[i][1], di[i][2]);

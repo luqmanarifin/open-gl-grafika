@@ -23,10 +23,10 @@ jajal:
 	g++ jajal.c -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm -std=c++11 -Wall -o e
 
 compile:
-	g++ main.cpp -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm -std=c++11 -Wall -o main
+	g++ rubik.c -lX11 -lXi -lXmu -lglut -lGL -lGLU -lm -std=c++11 -Wall -o rubik
 
 run:
-	./main
+	./rubik
 
 # to produce, say, lesson1.tar.gz:
 #
